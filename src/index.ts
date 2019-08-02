@@ -18,11 +18,38 @@ for (let i = 0; i < 3; i++) {
 
 while (true) {
   let n: string = readlineSync.question('>> ')
+
   console.log('----------')
-  if (n == 'end') {
+  if (n == 'quit') {
     console.log(`num: ${num.toString().replace(/,/g, '')}\nbye.`)
     break
   }
+
+  //3桁でなければ
+  if (n.length != 3) {
+    console.log('unexpected input!!\n----------')
+    continue
+  }
+  //数値でなければ
+  else if (isNaN(Number(n)) === true) {
+    console.log('unexpected input!!\n----------')
+    continue
+  }
+  //重複
+  const Uniqcheck = (t: string) => {
+    for (let i = 0; i < 3; i++) {
+      if (t.indexOf(t.split('')[i], i + 1) > -1) {
+        return 'bad'
+      }
+    }
+    return 'good'
+  }
+
+  if (Uniqcheck(n) == 'bad') {
+    console.log('unexpected input!!')
+    continue
+  }
+
   const user_value: string[] = n.split('')
   let eat: number = 0
   let bite: number = 0
